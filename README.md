@@ -4,6 +4,10 @@ If you are a data API developer you can distribute the generated context and let
 
 As an example we will use the [Northwind database made available online](http://services.odata.org/V4/Northwind/Northwind.svc) for testing purposes by Microsoft.
 
+## Install JaySvcUtil
+
+```$ npm install -g jaysvcutil```
+
 ## Using JaySvcUtil
 
 ```$ jaysvcutil –-metadataUri http://services.odata.org/V4/Northwind/Northwind.svc --out northwind.js```
