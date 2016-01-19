@@ -12,7 +12,7 @@ As an example we will use the [Northwind database made available online](http://
 
 ```$ jaysvcutil –-metadataUri http://services.odata.org/V4/Northwind/Northwind.svc --out northwind.js```
 
-## JaySvcUtil commandline parameters
+## JaySvcUtil command line parameters
 
 ```
 Usage: jaysvcutil --metadataUri <OData server url>
@@ -43,7 +43,7 @@ Options:
   -p, --password             The network password for an authenticated OData
                              service.
   -h, --help                 Dispaly this help screen.
-``` 
+```
 
 ### More info
 
