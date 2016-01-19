@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 /// <reference path="../typings/tsd.d.ts"/>
 import * as yargs from 'yargs';
-import { DynamicMetadata } from 'jaydata-dynamic-metadata';
+import { DynamicMetadata, MetadataHandler } from 'jaydata-dynamic-metadata';
 import * as fs from 'fs';
 import { js_beautify } from 'js-beautify';
 
@@ -73,7 +73,8 @@ else if (!argv.metadataUri){
 		}
 	};
 
-	var dynamicMetadata = new DynamicMetadata(/* $data mock */ {
+	// $data mock
+	var $data = {
 		Container: {
 			resolveType: function(v){
 				if (typeof v == 'string') return classes[v];
@@ -91,15 +92,11 @@ else if (!argv.metadataUri){
 		EntityContext: classes['$data.EntityContext'],
 		Enum: classes['$data.Enum'],
 		createEnum: function(){}
-	});
+	};
 
-	dynamicMetadata.service(argv.metadataUri, {
-		user: argv.userName,
-		password: argv.password,
-		debug: true,
-		autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
-		namespace: argv.namespace
-	}).then(function(factory){
+	var dynamicMetadata = new DynamicMetadata($data);
+
+	var process = function(factory){
 		var src = js_beautify(factory.src);
 		if (argv.contextBaseClass) src = src.replace(/\$data\.EntityContext/g, argv.contextBaseClass);
 		if (argv.entityBaseClass) src = src.replace(/\$data\.Entity/g, argv.entityBaseClass);
@@ -109,7 +106,31 @@ else if (!argv.metadataUri){
 		var filename = argv.out || 'JayDataContext.js';
 		fs.writeFileSync(filename, src, { encoding: 'utf8' });
 		console.log('Context file successfully created:', filename);
-	}, function(err){
-		console.log(err);
-	});
+	};
+
+	if (argv.metadataUri.indexOf('http:') == 0 || argv.metadataUri.indexOf('https:') == 0){
+		dynamicMetadata.service(argv.metadataUri, {
+			user: argv.userName,
+			password: argv.password,
+			debug: true,
+			autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
+			namespace: argv.namespace
+		}).then(process, function(err){
+			console.log(err);
+		});
+	}else{
+		fs.readFile(argv.metadataUri, 'utf8', function(err, text){
+			if (err){
+				console.log(err.message);
+			}else{
+				var $metadata:string = text;
+				process(new MetadataHandler($data, {
+					debug: true,
+					autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
+					namespace: argv.namespace
+				}).parse($metadata));
+			}
+		});
+
+	}
 }

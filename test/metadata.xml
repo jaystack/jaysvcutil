@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="JayData.Test.CommonItems.Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="User">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LoginName" Type="Edm.String" />
+        <Property Name="Email" Type="Edm.String" />
+        <Property Name="UserType" Type="JayData.Test.CommonItems.Entities.UserType" Nullable="false" />
+        <NavigationProperty Name="RevieweredArticles" Type="Collection(JayData.Test.CommonItems.Entities.Article)" Partner="Reviewer" />
+        <NavigationProperty Name="AuthoredArticles" Type="Collection(JayData.Test.CommonItems.Entities.Article)" Partner="Author" />
+        <NavigationProperty Name="Profile" Type="JayData.Test.CommonItems.Entities.UserProfile" Partner="User" />
+      </EntityType>
+      <EntityType Name="MyTClass" Abstract="true" OpenType="true" p4:OpenProperty="Dynamics" xmlns:p4="https://jaystack.com/jaydata/schema">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Title" Type="Edm.String" p4:mode="Display" />
+      </EntityType>
+      <EntityType Name="Article" BaseType="JayData.Test.CommonItems.Entities.MyTClass">
+        <Property Name="RowVersion" Type="Edm.Binary" ConcurrencyMode="Fixed" />
+        <Property Name="Lead" Type="Edm.String" />
+        <Property Name="Body" Type="Edm.String" />
+        <Property Name="CreateDate" Type="Edm.DateTimeOffset" />
+        <Property Name="Thumbnail_LowRes" Type="Edm.Binary" />
+        <Property Name="Thumbnail_HighRes" Type="Edm.Binary" />
+        <NavigationProperty Name="Category" Type="JayData.Test.CommonItems.Entities.Category" Partner="Articles" />
+        <NavigationProperty Name="Reviewer" Type="JayData.Test.CommonItems.Entities.User" Partner="RevieweredArticles" />
+        <NavigationProperty Name="Author" Type="JayData.Test.CommonItems.Entities.User" Partner="AuthoredArticles" />
+        <NavigationProperty Name="Tags" Type="Collection(JayData.Test.CommonItems.Entities.TagConnection)" Partner="Article" />
+      </EntityType>
+      <EntityType Name="UserProfile">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FullName" Type="Edm.String" />
+        <Property Name="Bio" Type="Edm.String" />
+        <Property Name="Avatar" Type="Edm.Binary" />
+        <Property Name="Birthday" Type="Edm.DateTimeOffset" />
+        <Property Name="Location" Type="JayData.Test.CommonItems.Entities.Location" />
+        <NavigationProperty Name="User" Type="JayData.Test.CommonItems.Entities.User" Nullable="false" Partner="Profile" />
+      </EntityType>
+      <EntityType Name="Category" BaseType="JayData.Test.CommonItems.Entities.MyTClass">
+        <Property Name="RowVersion" Type="Edm.Binary" />
+        <Property Name="Subtitle" Type="Edm.String" />
+        <Property Name="Description" Type="Edm.String" />
+        <NavigationProperty Name="Articles" Type="Collection(JayData.Test.CommonItems.Entities.Article)" Partner="Category" />
+      </EntityType>
+      <EntityType Name="Tag">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Title" Type="Edm.String" />
+        <NavigationProperty Name="Articles" Type="Collection(JayData.Test.CommonItems.Entities.TagConnection)" Partner="Tag" />
+      </EntityType>
+      <EntityType Name="TestItem">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="i0" Type="Edm.Int32" />
+        <Property Name="b0" Type="Edm.Boolean" />
+        <Property Name="s0" Type="Edm.String" />
+        <Property Name="blob" Type="Collection(Edm.Byte)" />
+        <Property Name="n0" Type="Edm.Double" />
+        <Property Name="d0" Type="Edm.DateTimeOffset" />
+        <Property Name="g0" Type="Edm.Guid" />
+        <Property Name="l0" Type="Edm.Int64" />
+        <Property Name="de0" Type="Edm.Decimal" Nullable="false" />
+        <Property Name="b1" Type="Edm.Byte" />
+      </EntityType>
+      <EntityType Name="TagConnection">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Article" Type="JayData.Test.CommonItems.Entities.Article" Partner="Tags" />
+        <NavigationProperty Name="Tag" Type="JayData.Test.CommonItems.Entities.Tag" Partner="Articles" />
+      </EntityType>
+      <EntityType Name="TestItemGuid" OpenType="true">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="i0" Type="Edm.Int32" />
+        <Property Name="b0" Type="Edm.Boolean" />
+        <Property Name="s0" Type="Edm.String" />
+        <Property Name="time" Type="Edm.TimeOfDay" Nullable="false" />
+        <Property Name="date" Type="Edm.Date" Nullable="false" />
+        <Property Name="t" Type="Edm.DateTimeOffset" Nullable="false" />
+        <Property Name="dur" Type="Edm.Duration" Nullable="false" />
+        <Property Name="dtOffset" Type="Edm.DateTimeOffset" Nullable="false" />
+        <Property Name="lng" Type="Edm.Int64" Nullable="false" />
+        <Property Name="dec" Type="Edm.Decimal" Nullable="false" />
+        <Property Name="flt" Type="Edm.Single" Nullable="false" />
+        <Property Name="emails" Type="Collection(Edm.String)" />
+        <NavigationProperty Name="Group" Type="JayData.Test.CommonItems.Entities.TestItemGroup" Partner="Items" />
+      </EntityType>
+      <EntityType Name="TestItemGroup">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <NavigationProperty Name="Items" Type="Collection(JayData.Test.CommonItems.Entities.TestItemGuid)" Partner="Group" />
+      </EntityType>
+      <EntityType Name="TestItemType">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="blob" Type="Edm.Binary" />
+        <Property Name="b0" Type="Edm.Boolean" />
+        <Property Name="b1" Type="Edm.Byte" />
+        <Property Name="d0" Type="Edm.DateTimeOffset" />
+        <Property Name="de0" Type="Edm.Decimal" Nullable="false" />
+        <Property Name="n0" Type="Edm.Double" />
+        <Property Name="si0" Type="Edm.Single" />
+        <Property Name="g0" Type="Edm.Guid" />
+        <Property Name="i16" Type="Edm.Int16" />
+        <Property Name="i0" Type="Edm.Int32" />
+        <Property Name="i64" Type="Edm.Int64" />
+        <Property Name="s0" Type="Edm.String" />
+      </EntityType>
+      <ComplexType Name="Location">
+        <Property Name="Address" Type="Edm.String" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="Zip" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Country" Type="Edm.String" />
+      </ComplexType>
+      <EnumType Name="UserType">
+        <Member Name="Admin" Value="0" />
+        <Member Name="Customer" Value="1" />
+        <Member Name="Guest" Value="2" />
+      </EnumType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Action Name="GetTitles" IsBound="true">
+        <Parameter Name="bindingParameter" Type="Collection(JayData.Test.CommonItems.Entities.TestItemGuid)" />
+        <Parameter Name="count" Type="Edm.Int32" Nullable="false" />
+        <ReturnType Type="Collection(Edm.String)" Unicode="false" />
+      </Action>
+      <Action Name="GetDisplayText" IsBound="true">
+        <Parameter Name="bindingParameter" Type="JayData.Test.CommonItems.Entities.TestItemGuid" />
+        <ReturnType Type="Edm.String" Unicode="false" />
+      </Action>
+      <Action Name="SAction1">
+        <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+        <ReturnType Type="Edm.String" Unicode="false" />
+      </Action>
+      <Action Name="SAction2">
+        <Parameter Name="count" Type="Edm.Int32" Nullable="false" />
+        <ReturnType Type="Collection(JayData.Test.CommonItems.Entities.Article)" />
+      </Action>
+      <Function Name="SFunction1">
+        <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+        <ReturnType Type="Collection(Edm.String)" Unicode="false" />
+      </Function>
+      <Function Name="SFunction2">
+        <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+        <ReturnType Type="Edm.String" Unicode="false" />
+      </Function>
+      <EntityContainer Name="Container">
+        <EntitySet Name="Users" EntityType="JayData.Test.CommonItems.Entities.User">
+          <NavigationPropertyBinding Path="Profile" Target="UserProfiles" />
+        </EntitySet>
+        <EntitySet Name="Articles" EntityType="JayData.Test.CommonItems.Entities.Article">
+          <NavigationPropertyBinding Path="Category" Target="Categories" />
+          <NavigationPropertyBinding Path="Reviewer" Target="Users" />
+          <NavigationPropertyBinding Path="Author" Target="Users" />
+          <Annotation Term="Org.OData.Core.V1.OptimisticConcurrency">
+            <Collection>
+              <PropertyPath>RowVersion</PropertyPath>
+            </Collection>
+          </Annotation>
+        </EntitySet>
+        <EntitySet Name="UserProfiles" EntityType="JayData.Test.CommonItems.Entities.UserProfile" />
+        <EntitySet Name="Categories" EntityType="JayData.Test.CommonItems.Entities.Category" />
+        <EntitySet Name="Tags" EntityType="JayData.Test.CommonItems.Entities.Tag" />
+        <EntitySet Name="TestTable" EntityType="JayData.Test.CommonItems.Entities.TestItem" />
+        <EntitySet Name="TagConnections" EntityType="JayData.Test.CommonItems.Entities.TagConnection">
+          <NavigationPropertyBinding Path="Article" Target="Articles" />
+          <NavigationPropertyBinding Path="Tag" Target="Tags" />
+        </EntitySet>
+        <EntitySet Name="TestTable2" EntityType="JayData.Test.CommonItems.Entities.TestItemGuid">
+          <NavigationPropertyBinding Path="Group" Target="TestItemGroups" />
+        </EntitySet>
+        <EntitySet Name="TestItemGroups" EntityType="JayData.Test.CommonItems.Entities.TestItemGroup" />
+        <EntitySet Name="TestItemTypes" EntityType="JayData.Test.CommonItems.Entities.TestItemType" />
+        <ActionImport Name="SAction1" Action="Default.SAction1" />
+        <ActionImport Name="SAction2" Action="Default.SAction2" EntitySet="Articles" />
+        <FunctionImport Name="SFunction1" Function="Default.SFunction1" IncludeInServiceDocument="true" />
+        <FunctionImport Name="SFunction2" Function="Default.SFunction2" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
