@@ -14,20 +14,36 @@ As an example we will use the [Northwind database made available online](http://
 
 ## JaySvcUtil commandline parameters
 
-| parameter | description | default value |
-| :--------- | :----------- | :------------- |
-| *--metadataUri, -m* | Required. The uri of the oData $metadata definition. Can be an online resource or a local file as well | |
-| *--out, -o* | The name of the generated output file. | JayDataContext.js |
-| *--namespace, -n* | The namespace of the generated JayData EntitContext class. | Taken from the service metadata. |
-| *--contextBaseClass, -c* | The name of the base class for the generated entity context. | $data.EntityContext |
-| *--entityBaseClass, -e* | The name of the base class for the generated entity types. | $data.Entity |
-| *--entitySetBaseClass, -s* | The name of the base class for the generated entity sets. | $data.EntitySet |
-| *--collectionBaseClass, -a* | The name of the base class for the generated entity sets. | Array |
-| *--autoCreateContext, -b*  | Create an instance of the context with default parameters.	| false |
-| *--contextInstanceName, -x* | The name of the automatically generated context instance under the context namespace. | context |
-| *--help, -h* | Displays parameter options | |
-| *--username, -u* | The username to authenticate with | |
-| *--password, -p* | The account password | |	 
+```
+Usage: jaysvcutil --metadataUri <OData server url>
+
+Options:
+  -m, --metadataUri          The URI of the OData $metadata definition. Can be
+                             an online resource or a local file as well.
+  -o, --out                  The name of the generated output file. Default is
+                             JayDataContext.js.
+  -n, --namespace            The namespace of the generated JayData
+                             EntitContext class. Default is taken from the
+                             metadata.
+  -c, --contextBaseClass     The name of the base class for the generated
+                             entity context. Default is $data.EntityContext.
+  -e, --entityBaseClass      The name of the base class for the generated
+                             entity types. Default is $data.Entity.
+  -s, --entitySetBaseClass   The name of the base class for the generated
+                             entity sets. Default is $data.EntitySet.
+  -a, --collectionBaseClass  The name of the base class for the generated
+                             entity sets. Default is Array.
+  -b, --autoCreateContext    Create an instance of the context with default
+                             parameters. Default is false.
+  -x, --contextInstanceName  The name of the automatically generated context
+                             instance under the context namespace. Default is
+                             "context".
+  -u, --userName             The network username for an authenticated OData
+                             service.
+  -p, --password             The network password for an authenticated OData
+                             service.
+  -h, --help                 Dispaly this help screen.
+``` 
 
 ### More info
 
