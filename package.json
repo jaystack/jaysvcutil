@@ -19,7 +19,7 @@
     "url": "http://jaydata.org"
   },
   "dependencies": {
-    "jaydata-dynamic-metadata": "^0.0.3",
+    "jaydata-dynamic-metadata": "^0.0.4",
     "js-beautify": "^1.5.10",
     "yargs": "^3.32.0"
   },
