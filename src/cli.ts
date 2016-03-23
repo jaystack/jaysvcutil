@@ -41,80 +41,27 @@ else if (!argv.metadataUri){
 	yargs.showHelp();
 	console.log('ERROR: The option --metadataUri is mandatory, you must define it.');
 }else{
-	var isAssignableTo = function(v){
-		return this.baseTypes.indexOf(v) >= 0;
-	};
-
-	var extend = function(){
-		return (classes[arguments[0]] = {
-			name: arguments[0].split('.').pop(),
-			fullName: arguments[0],
-			extend: extend,
-			isAssignableTo: isAssignableTo,
-			baseTypes: (this.baseTypes || []).concat(this)
-		});
-	};
-
-	var classes = {
-		'$data.Entity': {
-			name: '$data.Entity',
-			extend: extend,
-			isAssignableTo: isAssignableTo
-		},
-		'$data.EntityContext': {
-			name: '$data.EntityContext',
-			extend: extend,
-			isAssignableTo: isAssignableTo
-		},
-		'$data.Enum': {
-			name: '$data.Enum',
-			extend: extend,
-			isAssignableTo: isAssignableTo
-		}
-	};
-
-	// $data mock
-	var $data = {
-		Container: {
-			resolveType: function(v){
-				if (typeof v == 'string') return classes[v];
-				for (var i in classes){
-					if (v === classes[i]) return v;
-				}
-			},
-			resolveName: function(v){
-				for (var i in classes){
-					if (v === classes[i] || v === i) return i;
-				}
-			}
-		},
-		Entity: classes['$data.Entity'],
-		EntityContext: classes['$data.EntityContext'],
-		Enum: classes['$data.Enum'],
-		createEnum: function(){}
-	};
-
-	var dynamicMetadata = new DynamicMetadata($data);
-
 	var process = function(factory){
 		var src = js_beautify(factory.src);
-		if (argv.contextBaseClass) src = src.replace(/\$data\.EntityContext/g, argv.contextBaseClass);
-		if (argv.entityBaseClass) src = src.replace(/\$data\.Entity/g, argv.entityBaseClass);
-		if (argv.entitySetBaseClass) src = src.replace(/\$data\.EntitySet/g, argv.entitySetBaseClass);
-		if (argv.collectionBaseClass) src = src.replace(/"Array"/g, '"' + argv.collectionBaseClass + '"');
-
 		var filename = argv.out || 'JayDataContext.js';
 		fs.writeFileSync(filename, src, { encoding: 'utf8' });
 		console.log('Context file successfully created:', filename);
 	};
 
 	if (argv.metadataUri.indexOf('http:') == 0 || argv.metadataUri.indexOf('https:') == 0){
+	    var dynamicMetadata = new DynamicMetadata({});
 		dynamicMetadata.service(argv.metadataUri, {
 			user: argv.userName,
 			password: argv.password,
 			debug: true,
 			autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
-			namespace: argv.namespace
+			namespace: argv.namespace,
+            
+            baseType: argv.entityBaseClass,
+            entitySetType: argv.entitySetBaseClass,
+            contextType: argv.contextBaseClass,
+            collectionBaseType: argv.collectionBaseClass,
+            generateTypes: false
 		}).then(process, function(err){
 			console.log(err);
 		});
@@ -124,10 +71,16 @@ else if (!argv.metadataUri){
 				console.log(err.message);
 			}else{
 				var $metadata:string = text;
-				process(new MetadataHandler($data, {
+				process(new MetadataHandler({}, {
 					debug: true,
 					autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
-					namespace: argv.namespace
+					namespace: argv.namespace,
+            
+                    baseType: argv.entityBaseClass,
+                    entitySetType: argv.entitySetBaseClass,
+                    contextType: argv.contextBaseClass,
+                    collectionBaseType: argv.collectionBaseClass,
+                    generateTypes: false
 				}).parse($metadata));
 			}
 		});
