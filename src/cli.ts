@@ -1,4 +1,5 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
+
 /// <reference path="../typings/tsd.d.ts"/>
 import * as yargs from 'yargs';
 import { DynamicMetadata, MetadataHandler } from 'jaydata-dynamic-metadata';
@@ -56,7 +57,7 @@ else if (!argv.metadataUri){
 			debug: true,
 			autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
 			namespace: argv.namespace,
-            
+
             baseType: argv.entityBaseClass,
             entitySetType: argv.entitySetBaseClass,
             contextType: argv.contextBaseClass,
@@ -75,7 +76,7 @@ else if (!argv.metadataUri){
 					debug: true,
 					autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
 					namespace: argv.namespace,
-            
+
                     baseType: argv.entityBaseClass,
                     entitySetType: argv.entitySetBaseClass,
                     contextType: argv.contextBaseClass,
