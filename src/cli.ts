@@ -11,6 +11,7 @@ var argv = yargs
 	.example('jaysvcutil -m http://services.odata.org/V4/Northwind/Northwind.svc', 'Generate context from Northwind OData service.')
 	.describe('m', 'The URI of the OData $metadata definition. Can be an online resource or a local file as well.')
 	.describe('o', 'The name of the generated output file. Default is JayDataContext.js.')
+	.describe('t', 'The name of the generated TypeScript definition file. Default is JayDataContext.d.ts.')
 	.describe('n', 'The namespace of the generated JayData EntitContext class. Default is taken from the metadata.')
 	.describe('c', 'The name of the base class for the generated entity context. Default is $data.EntityContext.')
 	.describe('e', 'The name of the base class for the generated entity types. Default is $data.Entity.')
@@ -23,6 +24,7 @@ var argv = yargs
 	.describe('h', 'Dispaly this help screen.')
 	.alias('m', 'metadataUri')
 	.alias('o', 'out')
+	.alias('t', 'dts')
 	.alias('n', 'namespace')
 	.alias('c', 'contextBaseClass')
 	.alias('e', 'entityBaseClass')
@@ -45,8 +47,11 @@ else if (!argv.metadataUri){
 	var process = function(factory){
 		var src = js_beautify(factory.src);
 		var filename = argv.out || 'JayDataContext.js';
+		var dts = argv.dts || 'JayDataContext.d.ts';
 		fs.writeFileSync(filename, src, { encoding: 'utf8' });
 		console.log('Context file successfully created:', filename);
+		fs.writeFileSync(dts, factory.dts, { encoding: 'utf8' });
+		console.log('TypeScript definition file successfully created:', dts);
 	};
 
 	if (argv.metadataUri.indexOf('http:') == 0 || argv.metadataUri.indexOf('https:') == 0){
