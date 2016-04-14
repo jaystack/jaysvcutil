@@ -22,6 +22,8 @@ Options:
                              an online resource or a local file as well.
   -o, --out                  The name of the generated output file. Default is
                              JayDataContext.js.
+  -t, --dts                  The name of the generated TypeScript definition
+                             file. Default is JayDataContext.d.ts.
   -n, --namespace            The namespace of the generated JayData
                              EntitContext class. Default is taken from the
                              metadata.
