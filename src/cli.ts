@@ -62,6 +62,7 @@ else if (!argv.metadataUri){
 			debug: true,
 			autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
 			namespace: argv.namespace,
+			contextName: (argv.dts || 'JayDataContext.d.ts').split('.')[0],
 
             baseType: argv.entityBaseClass,
             entitySetType: argv.entitySetBaseClass,
@@ -81,6 +82,7 @@ else if (!argv.metadataUri){
 					debug: true,
 					autoCreateContext: !argv.autoCreateContext ? undefined : argv.contextInstanceName || 'context',
 					namespace: argv.namespace,
+					contextName: (argv.dts || 'JayDataContext.d.ts').split('.')[0],
 
                     baseType: argv.entityBaseClass,
                     entitySetType: argv.entitySetBaseClass,
