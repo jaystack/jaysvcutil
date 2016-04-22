@@ -25,7 +25,7 @@ Options:
   -t, --dts                  The name of the generated TypeScript definition
                              file. Default is JayDataContext.d.ts.
   -n, --namespace            The namespace of the generated JayData
-                             EntitContext class. Default is taken from the
+                             EntityContext class. Default is taken from the
                              metadata.
   -c, --contextBaseClass     The name of the base class for the generated
                              entity context. Default is $data.EntityContext.
