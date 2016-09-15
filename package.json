@@ -12,14 +12,14 @@
     "iPhone",
     "Android"
   ],
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "http://jaydata.org",
   "author": {
     "name": "JayData",
     "url": "http://jaydata.org"
   },
   "dependencies": {
-    "jaydata-dynamic-metadata": "^0.1.15",
+    "jaydata-dynamic-metadata": "^0.1.17",
     "js-beautify": "^1.5.10",
     "yargs": "^3.32.0"
   },
