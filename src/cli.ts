@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-/// <reference path="../typings/tsd.d.ts"/>
 import * as yargs from 'yargs';
 import { DynamicMetadata, MetadataHandler } from 'jaydata-dynamic-metadata';
 import * as fs from 'fs';
-import { js_beautify } from 'js-beautify';
+import * as js_beautify from 'js-beautify';
 
 var argv = yargs
 	.usage('Usage: jaysvcutil --metadataUri <OData server url>')

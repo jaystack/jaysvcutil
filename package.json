@@ -12,14 +12,14 @@
     "iPhone",
     "Android"
   ],
-  "version": "0.1.10",
+  "version": "0.1.11",
   "homepage": "http://jaydata.org",
   "author": {
     "name": "JayData",
     "url": "http://jaydata.org"
   },
   "dependencies": {
-    "jaydata-dynamic-metadata": "^0.1.17",
+    "jaydata-dynamic-metadata": "^0.1.18",
     "js-beautify": "^1.5.10",
     "yargs": "^3.32.0"
   },
@@ -66,9 +66,18 @@
     "node": ">=0.6.0"
   },
   "license": "(MIT OR GPL-2.0)",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/js-beautify": "0.0.28",
+    "@types/node": "^7.0.4",
+    "@types/yargs": "^6.5.0",
+    "typescript": "^2.1.5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
   "preferGlobal": true,
   "bin": {
-      "jaysvcutil": "lib/cli.js"
+    "jaysvcutil": "lib/cli.js"
   }
 }
